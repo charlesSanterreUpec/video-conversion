@@ -6,14 +6,14 @@ from random import randint
 from botocore.exceptions import ClientError
 
 
-class videoconversion(object):
+class VideoConversion(object):
 
     def __init__(self, _config_):
         self.s3 = boto3.resource('s3')
         self.client = boto3.client('s3')
         self.configuration = _config_
 
-    def convert_video(self, _path_):
+    def convertvideo(self, _path_):
         key = self.get_last_split(_path_, '/')
         extension = self.get_last_split(key, '.')
         n = str(randint(0, 100))
