@@ -20,7 +20,6 @@ class ConversionDatabase(object):
     def __init__(self, _config_):
         dynamodb = boto3.resource(_config_.get_database_name(), region_name=_config_.get_database_region())
         self.table = dynamodb.Table(_config_.get_database_table())
-        logging.info(self.table.creation_date_time)
 
     def update_item_status(self, _id_, _status_):
         try:

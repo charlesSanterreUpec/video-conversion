@@ -10,20 +10,6 @@ conversion:
   messaging :
     video-status:
       url: wss://darkops:42308/video_status
-#      url: ws://darkops:42308/video_status
-    rabbitmq :
-      conversion-exchange: video-conversion-exchange
-      conversion-queue: video-conversion-queue
-
-rabbitmq-server:
-  server: localhost
-  port: 5672
-  credentials:
-    vhost: ezip         # sudo rabbitmqctl add_vhost ezip
-                        # sudo rabbitmqctl set_permissions -p ezip ezip ".*" ".*" ".*"
-    username: ezip      # sudo rabbitmqctl add_user ezip pize
-    password: pize
-
 
 cloud:
     project: 'videoconvertering3'
@@ -31,8 +17,8 @@ cloud:
 
 aws:
   name: 'dynamodb'
-  table: 'video_conversions'
+  table: 'table_video'
   region: 'eu-west-3'
   s3:
-    name: 'edu.esipe.i3.ezipflix'
+    name: 'edu.esipe.i3.tpvideoconvertering3s3'
     region: 'eu-west-3'

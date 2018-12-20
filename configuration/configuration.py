@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=log
 class Configuration(object):
 
     def __init__(self):
-        self.configuration_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'application.yml')
+        self.configuration_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), '../application.yml')
         self.configuration_data = None
 
         f = open(self.configuration_file, 'r')

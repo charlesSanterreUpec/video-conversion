@@ -4,12 +4,11 @@ import json
 
 from google.cloud import pubsub_v1
 
-
 class videoconversionmessaging(object):
 
     def __init__(self, _config_, database_service, conversion_service):
-        project_id = _config_.get_gcloud_project_id()
-        subscription_name = _config_.get_gcloud_subscription_name()
+        project_id = _config_.get_cloud_project()
+        subscription_name = _config_.get_cloud_topic()
 
         subscriber = pubsub_v1.SubscriberClient()
         subscription_path = subscriber.subscription_path(project_id, subscription_name)
