@@ -18,20 +18,8 @@ class Configuration(object):
     def get_cloud_project(self):
         return self.configuration_data['cloud']['project']
 
-    def get_cloud_topic(self):
-        return self.configuration_data['cloud']['topic']
+    def get_cloud_bucket(self):
+        return self.configuration_data['cloud']['bucket']
 
-    def get_database_name(self):
-        return self.configuration_data['aws']['name']
-
-    def get_database_table(self):
-        return self.configuration_data['aws']['table']
-
-    def get_database_region(self):
-        return self.configuration_data['aws']['region']
-
-    def get_bucket_name(self):
-        return self.configuration_data['aws']['s3']['name']
-
-    def get_bucket_region(self):
-        return self.configuration_data['aws']['s3']['region']
+    def get_file_path(self):
+        return self.configuration_data['file']['path']
