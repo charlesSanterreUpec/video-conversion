@@ -10,3 +10,4 @@ if __name__ == '__main__':
     config = Configuration()
     conversion = VideoConversion(config)
     conversion.convertvideo()
+    conversion.uploadCloudStorage()

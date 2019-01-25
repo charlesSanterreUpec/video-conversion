@@ -1,6 +1,8 @@
 cloud:
     project: 'resolprob'
     bucket: 'resolprob'
+    dataset: 'stats'
+    table: 'data'
 
 file:
-  path: 'Game.of.Thrones.S07E07.1080p-intro.mkv'
+  path: 'Game.of.Thrones.S07E07.1080p-intro'

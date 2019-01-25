@@ -1,8 +1,10 @@
 import ffmpy
-
-from random import randint
+from ffmpy import FFmpeg
 import logging
-
+from random import randint
+from google.cloud import bigquery, storage
+import time
+import math
 
 class VideoConversion(object):
 
@@ -11,19 +13,32 @@ class VideoConversion(object):
         self.configuration = _config_
 
     def convertvideo(self):
+        n = str(randint(0, 1000))
         logging.info("convertVideo")
-        #self.s3.Bucket(self.configuration.get_bucket_name()).download_file(key, 'local_temp_' + n + '.' + extension)
-        ff = ffmpy.FFmpeg(
-            inputs={self.configuration.get_file_path(): None},
-            outputs={'file_converted.avi': '-y -vcodec mpeg4 -b 4000k -acodec mp2 -ab 320k'}
+        ff = ffmpy.FFmpeg(executable='C:\\ffmpeg\\bin\\ffmpeg.exe',
+            inputs={self.configuration.get_file_path() +'.mkv': None},
+            outputs={self.configuration.get_file_path()+'-converted.avi': '-y -vcodec mpeg4 -b 4000k -acodec mp2 -ab 320k'}
         )
         ff.run()
-            #self.client.upload_file('output_temp_' + n + '.avi', self.configuration.get_bucket_name(),key.replace(extension, 'avi'))
-        #except ClientError as e:
-            #if e.response['Error']['Code'] == "404":
-                #logging.error('The object does not exist.')
-            #else:
-                #raise
+
+    def uploadCloudStorage(self):
+        before = time.time()
+        client = storage.Client(self.configuration.get_cloud_project())
+        bucket = client.get_bucket(self.configuration.get_cloud_bucket())
+        blob = bucket.blob(self.configuration.get_file_path() + '-converted.avi')
+        blob.upload_from_filename(self.configuration.get_file_path() + '-converted.avi')
+        after = time.time()
+
+        secondUpload = after - before
+        bigQueryClient = bigquery.Client(self.configuration.get_cloud_project())
+        datasetRef = bigQueryClient.dataset(self.configuration.get_cloud_dataset())
+        tableRef = datasetRef.table(self.configuration.get_cloud_table())
+        table = bigQueryClient.get_table(tableRef)
+
+        rows_to_insert = [
+            (2, math.floor(secondUpload), self.configuration.get_file_path() + '-converted.avi')
+        ]
+        errors = bigQueryClient.insert_rows(table, rows_to_insert)
 
     @staticmethod
     def get_last_split(_string_, _delimiter_):

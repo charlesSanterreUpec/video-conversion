@@ -23,3 +23,9 @@ class Configuration(object):
 
     def get_file_path(self):
         return self.configuration_data['file']['path']
+
+    def get_cloud_dataset(self):
+        return self.configuration_data['cloud']['dataset']
+
+    def get_cloud_table(self):
+        return self.configuration_data['cloud']['table']

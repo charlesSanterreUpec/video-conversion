@@ -1,6 +1,6 @@
 PyYAML
 ffmpy
+BigQuery-Python
 google-cloud-pubsub
 boto3
-botocore
-dynamo
+gcloud
